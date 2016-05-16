@@ -1,0 +1,972 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" style="height: 100%;border: none;padding: 0px;margin: 0px;">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=10; IE=9; IE=8; IE=7;  IE=EDGE"/>
+	<meta content="JobComposer" name="keywords" />
+	<meta content="JobComposer" name="description" />
+	<meta name="generator" content="JobComposer"/>
+	<link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon" />
+	<title>JobComposer-Malakas</title>
+	<link rel="stylesheet" href="/static/js/model/bootstrap-3.3.1-dist/dist/css/bootstrap.min.css" type="text/css"/>
+	<link rel="stylesheet" href="/static/js/model/bootstrap-3.3.1-dist/dist/css/bootstrap-theme.min.css" type="text/css"/>
+    
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" />
+    <link rel="stylesheet" href="/static/js/model/GoJS-1.6.4/extensions/DataInspector.css" type="text/css"/>
+	<style type="text/css">
+        /* Move down content because we have a fixed navbar that is 50px tall */
+		body {
+			padding-top: 50px;
+            height: 100%;
+		}
+        
+        /*
+         * Sidebar
+         */
+        /* Hide for mobile, show later */
+        .sidebar {
+          display: none;
+        }
+        @media (min-width: 768px) {
+          .sidebar {
+            position: fixed;
+            top: 51px;
+            bottom: 130px;
+            left: 0;
+            z-index: 1000;
+            display: block;
+            padding: 20px;
+            overflow-x: hidden;
+            overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+            background-color: #f5f5f5;
+            #border-right: 1px solid #eee;
+            border: 1px solid lightblue;
+          }
+        }
+        
+        /*
+        panel-title style
+        */
+        .panel-title {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        /* 
+        dragable palette and info
+        */
+        .draggable {
+          display: inline-block;
+          vertical-align: top;
+          border: 4px solid #BBB;
+          border-radius: 4px;
+          background-color: #F5F5F5;
+
+          position: absolute;
+          top: 20px;
+          left: 120px;
+          z-index: 500;
+        }
+
+        .handle {
+          background-color: lightblue;
+          cursor: move;
+          text-align: center;
+          font: bold 12px sans-serif;
+        }
+
+        #infoDraggable {
+          font: 12px helvetica, sans-serif;
+
+        }
+
+        #myInfo {
+          width: 100%;
+          overflow: hidden;
+        }
+
+        #myPaletteDiv {
+          background-color: #F5F5F5;
+          width: 100%;
+          height: 100%;
+        }
+
+        /*
+        One simple way of making a div fill its space,
+        with allowances for the title (top) and the resize handle (bottom)
+        */
+        #paletteContainer {
+          position:absolute;
+          bottom: 14px;
+          left: 0px;
+          right: 0px;
+          top: 14px;
+        }
+        
+        .panel {
+            border: none;
+        }
+        .panel-title {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        
+        [data-role="dynamic-fields"] > .form-inline + .form-inline {
+            margin-top: 0.5em;
+        }
+
+        [data-role="dynamic-fields"] > .form-inline [data-role="add"] {
+            display: none;
+        }
+
+        [data-role="dynamic-fields"] > .form-inline:last-child [data-role="add"] {
+            display: inline-block;
+        }
+
+        [data-role="dynamic-fields"] > .form-inline:last-child [data-role="remove"] {
+            display: none;
+        }
+        
+        legend {
+            font-size: 14px;
+        }
+        
+        
+        /*.row{
+    margin-top:40px;
+    padding: 0 10px;
+}*/
+
+.clickable{
+    cursor: pointer;   
+}
+
+.panel-heading span {
+	margin: -26px 15px 0 0;
+	font-size: 15px;
+}
+
+.panel-heading {
+    cursor: pointer;
+}
+
+.panel-heading a {
+    display: block;
+    padding: 10px 15px;
+}
+
+.panel-heading {
+    padding: 0;   
+}
+
+
+.panel-default>.panel-heading {
+    color: #333;
+    background-color: pink;
+    border-color: #ddd;
+}
+
+.panel-heading span {
+    font-size: 11px;
+}
+.panel-title {
+    font-size: 14px;
+    font-weight: normal;
+}
+    
+    
+    
+    
+    
+    
+    /***
+User Profile Sidebar by @keenthemes
+A component of Metronic Theme - #1 Selling Bootstrap 3 Admin Theme in Themeforest: http://j.mp/metronictheme
+Licensed under MIT
+***/
+
+.conf .panel-group {
+  padding-top: 50px;
+}
+.conf .panel-default {
+  border-radius: 0;
+  border: none;
+  background: none;
+  margin-bottom: 0;
+  padding-bottom: 14px;
+}
+.conf .panel-default > .panel-heading {
+  border: none;
+  background: none;
+  padding: 0;
+}
+.conf .panel-default > .panel-heading + .panel-collapse .panel-body {
+  border: none;
+  padding: 0 0 0 32px;
+}
+.conf .panel-default h5 {
+  font: 300 19px "Open Sans", Arial, sans-serif;
+  padding: 0;
+  margin: 0 0 5px;
+}
+.conf .panel-group .panel+.panel {
+  margin-top: 15px;
+}
+.conf .panel-default .accordion-toggle:before {
+  content: "";
+  width: 21px;
+  height: 21px;
+  display: inline-block;
+  background: #e54a1a url(http://keenthemes.com/assets/bootsnipp/toggle-icons.png) no-repeat 6px 10px;
+  border-radius: 50%;
+  margin-right: 10px;
+  position: relative;
+  top: 4px;
+}
+.conf .panel-default .collapsed:before {
+  background: #495764 url(http://keenthemes.com/assets/bootsnipp/toggle-icons.png) no-repeat 6px -148px;
+}
+.conf .panel-default .panel-title:hover .collapsed:before {
+  background-color: #e54a1a;
+}
+.conf .panel-default .accordion-toggle,
+.conf .panel-default .accordion-toggle:focus,
+.conf .panel-default .accordion-toggle:hover,
+.conf .panel-default .accordion-toggle:active {
+  color: #1ea9e3;
+  text-decoration: none;
+}
+.conf .panel-default .collapsed {
+  color: #5f6f7e;
+}
+	</style>
+</head>
+<body>
+	<nav class="navbar navbar-fixed-top navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/" style="font-size:18px;font-weight:bold;color:#FFF;"><!--<img alt="Brand" src="/static/images/favicon.ico" title="junneyang.sinaapp.com" style="margin-left:5px;height:24px;width:24px;"/>-->Malakas</a>
+			</div>
+			<div id="navbar" class="collapse navbar-collapse js-navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="/">Home</a></li>
+                    <li class="active"><a href="jobcomposer.html">JobComposer</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar" style="padding:5px;">
+                <!-- <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            node types
+                            </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body" id="palette" style="height: 250px;">
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="container-fluid" id="palette" style="height: 250px;"></div>
+                <!-- <div class="panel-group" id="accordion">
+                  <div class="panel panel-default">
+                    <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne">
+                      <h4 class="panel-title">
+                        <a class="accordion-toggle">
+                          Node Types #1
+                        </a>
+                      </h4>
+                      <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in">
+                      <div class="panel-body" id="palette" style="height: 250px;">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h4 class="panel-title"  data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo">
+                        <a class="accordion-toggle">
+                          Node Types #2
+                        </a>
+                      </h4>
+                      <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse">
+                      <div class="panel-body">
+                        Not available yet
+                      </div>
+                    </div>
+                  </div>
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h4 class="panel-title" data-toggle="collapse" data-parent="#accordion" data-target="#collapseThree">
+                        <a class="accordion-toggle">
+                          Node Types #3
+                        </a>
+                      </h4>
+                      <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse">
+                      <div class="panel-body">
+                        Not available yet
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+
+            </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="padding:5px;">
+                <div id="myDiagramDiv" style="border: solid 1px #DAE4E4; width:100%; height:500px;background-color: #DAE4E4;"></div>
+                <div>
+                    <div id ="diagramEventsMsg"></div>
+                  <button onclick="layout()">Re-layout Diagram</button>
+                  <button id="SaveButton" onclick="save()">Save</button>
+                  <button onclick="load()">Load</button><br />
+                  <textarea id="mySavedModel" style="width:100%;height:300px">
+                  { "class": "go.GraphLinksModel",
+  "nodeDataArray": [ 
+{"category":"HostService", "text":"mysql-master", "instances":"1", "key":-1, "loc":"528.0685424949247 -59.11142374915404", "group":-3},
+{"category":"HostService", "text":"mysql-slave", "instances":"1", "key":-2, "loc":"694.4495318366475 -59.11142374915404", "group":-3},
+{"text":"Group", "isGroup":true, "color":"green", "key":-3},
+{"category":"VirtualNode", "text":"redis-server", "instances":"1", "key":-4, "loc":"519.7590371657865 8.738576250846048"},
+{"category":"DockerService", "text":"mun-test", "instances":"2", "key":-5, "loc":"374.0456949966163 6.738576250846023"},
+{"category":"APIProxy", "text":"APIProxy", "instances":"2", "key":-6, "loc":"207.52284749830778 6.738576250846251"},
+{"category":"VirtualNode", "text":"lvs", "instances":"1", "key":-7, "loc":"87.00000000000003 6.7385762508459095"},
+{"category":"CommentText", "key":-8, "loc":"89.02046091493833 -87.3999999999997", "text":"Comment: this is an example just for demo"},
+{"text":"Group", "isGroup":true, "color":"green", "key":-10},
+{"category":"HostService", "text":"mysql-master", "instances":"1", "key":-11, "loc":"530.0685424949238 80.88857625084611", "group":-10},
+{"category":"HostService", "text":"mysql-slave", "instances":"1", "key":-12, "loc":"696.4495318366475 78.88857625084611", "group":-10},
+{"category":"HostService", "text":"app-test", "instances":"2", "key":-13, "loc":"375.04569499661596 66.73857625084588"}
+ ],
+  "linkDataArray": [ 
+{"from":-5, "to":-1, "points":[504.56854249492403,35,514.568542494924,35,576.0685424949245,-57.85,586.0685424949245,-57.85]},
+{"from":-5, "to":-4, "points":[504.56854249492403,35,514.568542494924,35,670.7590371657857,60,680.7590371657857,60]},
+{"from":-7, "to":-6, "points":[96.52284749830798,160,119.85618083164134,160,143.18951416497472,160,166.52284749830807,160]},
+{"from":-13, "to":-11, "points":[502.56854249492403,160,512.568542494924,160,576.068542494924,192.14999999999998,586.068542494924,192.14999999999998]},
+{"from":-5, "to":-6},
+{"from":-13, "to":-6},
+{"from":-2, "to":-1},
+{"from":-12, "to":-11}
+ ]}
+                </textarea>
+                </div>
+                
+                
+                
+                <div class="tabable" style="margin-top:40px;" id="items_tab">
+						<ul class="nav nav-tabs" id="pageTab"><!-- id="item_nav"-->
+							<li class="active" id="id_Global_Configurations_li"><a href="#id_Global_Configurations" data-toggle="tab" style="font-weight:bold;">Global Configurations</a></li>
+							<!-- <li><a href="#new_deploy" data-toggle="tab">New Deploy</a></li> -->
+                            <!-- <li><a href="#new_deploy_user" data-toggle="tab">PAAS Parameters Generator</a></li> -->
+                            <li id="id_Node_Configurations_li"><a href="#id_Node_Configurations" data-toggle="tab" style="font-weight:bold;">Node Configurations</a></li>
+						</ul>
+						<div class="tab-content" id="pageTabContent">
+							<div class="tab-pane active" id="id_Global_Configurations">
+								<div class="container-fluid">
+                                    <legend>Global Envs : </legend>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div data-role="dynamic-fields">
+                                                <div class="form-inline">
+                                                    <div class="form-group">
+                                                        <label class="sr-only" for="field-name">Field Name</label>
+                                                        <input type="text" class="form-control" id="field-name" placeholder="Field Name">
+                                                    </div>
+                                                    <span>-</span>
+                                                    <div class="form-group">
+                                                        <label class="sr-only" for="field-value">Field Value</label>
+                                                        <input type="text" class="form-control" id="field-value" placeholder="Field Value">
+                                                    </div>
+                                                    <button class="btn btn-danger" data-role="remove">
+                                                        <span class="glyphicon glyphicon-remove"></span>
+                                                    </button>
+                                                    <button class="btn btn-primary" data-role="add">
+                                                        <span class="glyphicon glyphicon-plus"></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <legend>Description : </legend>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-inline">
+                                                    <div class="form-group">
+                                                        <label class="sr-only" for="field-name">Description</label>
+                                                        <input type="text" class="form-control" id="field-name" placeholder="Comment for this Composer">
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+								</div>
+                                
+							</div>
+							
+                            <div class="tab-pane" id="id_Node_Configurations">
+                                <div class="container-fluid">
+                                    
+								</div>
+							</div>
+						</div>
+					</div>
+            </div>
+            <div id="infoDraggable" class="draggable" style="display: inline-block; vertical-align: top; padding: 5px; top: 70px; left: 80%;right:5px;">
+              <div id="infoDraggableHandle" class="handle">Info</div>
+              <div>
+              <div id="myInfo">Selecting nodes in the main Diagram will display information here</div>
+              </div>
+            </div>
+
+        </div>
+        <div class="push" style="height:130px;clear: both;"></div>
+    </div>
+    <!-- <div style="width:100%; white-space:nowrap;">
+        <span style="display: inline-block; vertical-align: top; padding: 5px; width:10%">
+            <div id="palettex" style="background-color: Snow; border: solid 1px gray; height: 800px"></div>
+        </span>
+        <span style="display: inline-block; vertical-align: top; padding: 5px; width:90%">
+            <div id="myDiagramDivx" style="border: solid 1px black; width:100%; height:800px;background-color: #DAE4E4;"></div>
+        </span>
+        
+        <div class="push" style="height:130px;clear: both;"></div>
+    </div> -->
+    <!-- <div style="min-height:100%;height: auto !important;height: 100%;margin: 0 auto -130px;">
+        <div id="myDiagramDiv" style="border: solid 1px black; width:1000px; height:500px;background-color: #DAE4E4;"></div>
+        <div class="push" style="height:130px;clear: both;"></div>
+    </div> -->
+    <footer class="footer" style="height:130px;margin-bottom:0px;padding-top:20px;background-color:black;clear:both;">
+		<div class="container text-center">
+			<p class="text-muted">Copyright ©2015 NSFOCUS. <a href="http://www.nsfocus.com">绿盟科技</a>. All Rights Reserved. </p>
+			<p class="text-muted">Technical Support : <a href="#">nscloud</a></p>
+			<p class="text-muted">京ICP备14004349号 京公网安备110108002872号 京ICP证110355号</p><br/>
+		</div>
+	</footer>
+	<script src="/static/js/jquery-1.11.2.min.js"></script>
+	<script src="/static/js/model/bootstrap-3.3.1-dist/dist/js/bootstrap.min.js"></script>
+    <script src="/static/js/model/bootstrap-3.3.1-dist/dist/js/docs.min.js"></script>
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+    <script src="/static/js/model/GoJS-1.6.4/release/go.js"></script>
+    <script src="/static/js/model/GoJS-1.6.4/extensions/DataInspector.js"></script>
+    <script src="/static/js/model/GoJS-1.6.4/extensions/Robot.js"></script>
+	<script type="text/javascript">
+        $(document)
+    .on('click', '.panel-heading span.clickable', function(e){
+        $(this).parents('.panel').find('.panel-collapse').collapse('toggle');
+    })
+    .on('show.bs.collapse', '.panel-collapse', function () {
+        var $span = $(this).parents('.panel').find('.panel-heading span.clickable');
+        $span.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+    })
+    .on('hide.bs.collapse', '.panel-collapse', function () {
+        var $span = $(this).parents('.panel').find('.panel-heading span.clickable');
+        $span.find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+    })
+    
+        $(document).ready(function(){
+            editorInit();
+		});
+        function layout() {
+    myDiagram.layoutDiagram(true);
+  }
+
+  // Show the diagram's model in JSON format
+  function save() {
+    document.getElementById("mySavedModel").value = myDiagram.model.toJson();
+    myDiagram.isModified = false;
+  }
+  function load() {
+    myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel").value);
+  }
+        function editorInit() {
+        var robot;  // this global variable will hold an instance of the Robot class for myDiagram
+        var global_conf = {};
+        global_conf["description"] = "Input Some Description ...";
+        global_conf["global_envs"] = [
+            {"Param1":"123456"},
+            {"Param2":"654321"},
+            {"Param3":"abcd"},
+            {"Param4":"dcba"}
+        ];
+        //var html = '';
+        //$("#id_Global_Configurations").html();
+        //$("#id_Global_Configurations").append(html);
+
+        var GO = go.GraphObject.make;  // for conciseness in defining templates
+
+    var yellowgrad = GO(go.Brush, "Linear", { 0: "rgb(254, 201, 0)", 1: "rgb(254, 162, 0)" });
+    var greengrad = GO(go.Brush, "Linear", { 0: "#98FB98", 1: "#9ACD32" });
+    var bluegrad = GO(go.Brush, "Linear", { 0: "#B0E0E6", 1: "#87CEEB" });
+    var redgrad = GO(go.Brush, "Linear", { 0: "#C45245", 1: "#7D180C" });
+    var whitegrad = GO(go.Brush, "Linear", { 0: "#F0F8FF", 1: "#E6E6FA" });
+
+    var bigfont = "normal 13pt Helvetica, Arial, sans-serif";
+    var smallfont = "normal 11pt Helvetica, Arial, sans-serif";
+
+    // Common text styling
+    function textStyle() {
+      return {
+        margin: 6,
+        //wrap: go.TextBlock.WrapFit,
+        //textAlign: "center",
+        editable: true,
+        font: bigfont,
+        isMultiline: false  // don't allow newlines in text
+      }
+    }
+
+    myDiagram =
+      GO(go.Diagram, "myDiagramDiv",
+        {
+          // have mouse wheel events zoom in and out instead of scroll up and down
+          "toolManager.mouseWheelBehavior": go.ToolManager.WheelZoom,
+          allowDrop: true,  // support drag-and-drop from the Palette
+          initialAutoScale: go.Diagram.Uniform,
+          "linkingTool.direction": go.LinkingTool.ForwardsOnly,
+          initialContentAlignment: go.Spot.Center,
+          layout: GO(go.LayeredDigraphLayout, { isInitial: false, isOngoing: false, layerSpacing: 50 }),
+          // allow Ctrl-G to call groupSelection()
+          "commandHandler.archetypeGroupData": { text: "Group", isGroup: true, color: "green" },
+          "undoManager.isEnabled": true
+        });
+
+    // when the document is modified, add a "*" to the title and enable the "Save" button
+    myDiagram.addDiagramListener("Modified", function(e) {
+      var button = document.getElementById("SaveButton");
+      if (button) button.disabled = !myDiagram.isModified;
+      var idx = document.title.indexOf("*");
+      if (myDiagram.isModified) {
+        if (idx < 0) document.title += "*";
+      } else {
+        if (idx >= 0) document.title = document.title.substr(0, idx);
+      }
+    });
+
+    var defaultAdornment =
+      GO(go.Adornment, "Spot",
+        GO(go.Panel, "Auto",
+          GO(go.Shape, { fill: null, stroke: "dodgerblue", strokeWidth: 4 }),
+          GO(go.Placeholder)),
+        // the button to create a "next" node, at the top-right corner
+        GO("Button",
+          { alignment: go.Spot.TopRight,
+            click: addNodeAndLink },  // this function is defined below
+          new go.Binding("visible", "", function(a) { return !a.diagram.isReadOnly; }).ofObject(),
+          GO(go.Shape, "PlusLine", { desiredSize: new go.Size(6, 6) })
+        )
+      );
+
+    // define the Node template
+    myDiagram.nodeTemplate =
+      GO(go.Node, "Auto",
+        { selectionAdornmentTemplate: defaultAdornment },
+        new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+        // define the node's outer shape, which will surround the TextBlock
+        GO(go.Shape, "Rectangle",
+          { fill: yellowgrad, stroke: "black",
+            portId: "", fromLinkable: true, toLinkable: true, cursor: "pointer",
+            toEndSegmentLength: 50, fromEndSegmentLength: 40 }),
+        GO(go.TextBlock, "Page",
+          { margin: 6,
+            font: bigfont,
+            editable: true },
+          new go.Binding("text", "text").makeTwoWay()));
+
+    myDiagram.nodeTemplateMap.add("HostService",
+      GO(go.Node, "Auto",
+        new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+        // new go.Binding("text", "text"),
+        GO(go.Shape, "RoundedRectangle",{ 
+          fill: "#FFFFFF",
+          portId: "", cursor: "pointer",  // the Shape is the port, not the whole Node
+        // allow all kinds of links from and to this port
+        fromLinkable: true, fromLinkableSelfNode: false, fromLinkableDuplicates: true,
+        toLinkable: true, toLinkableSelfNode: false, toLinkableDuplicates: true
+        }),
+        GO(go.Panel, "Horizontal",
+            GO(go.Picture,
+                      // Pictures should normally have an explicit width and height.
+                      // This picture has a red background, only visible when there is no source set
+                      // or when the image is partially transparent.
+                      { source:"/static/images/resources/host.jpg", margin: 2, width: 20, height: 20}
+            ),
+            GO(go.TextBlock, "HostService", textStyle(), new go.Binding("text", "text").makeTwoWay()
+            )
+        ), // end Horizontal Panel
+        GO(go.TextBlock,
+              new go.Binding("text", "instances"),
+              { alignment: go.Spot.TopRight, //background: "lightgreen", 
+              stroke: "yellowgrad", 
+              font: "bold 12pt", editable:false } 
+        )
+        ));
+        
+    myDiagram.nodeTemplateMap.add("DockerService",
+      GO(go.Node, "Auto",
+        new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+        // new go.Binding("text", "text"),
+        GO(go.Shape, "RoundedRectangle",{ 
+          fill: "#FFFFFF",
+          portId: "", cursor: "pointer",  // the Shape is the port, not the whole Node
+        // allow all kinds of links from and to this port
+        fromLinkable: true, fromLinkableSelfNode: false, fromLinkableDuplicates: true,
+        toLinkable: true, toLinkableSelfNode: false, toLinkableDuplicates: true
+        }),
+        GO(go.Panel, "Horizontal",
+            GO(go.Picture,
+                      // Pictures should normally have an explicit width and height.
+                      // This picture has a red background, only visible when there is no source set
+                      // or when the image is partially transparent.
+                      { source:"/static/images/resources/docker.jpg", margin: 2, width: 20, height: 20}),
+            GO(go.TextBlock, "DockerService", textStyle(), new go.Binding("text", "text").makeTwoWay()
+              )
+        ), // end Horizontal Panel
+        GO(go.TextBlock,
+              new go.Binding("text", "instances"),
+              { alignment: go.Spot.TopRight, //background: "lightgreen", 
+              stroke: "yellowgrad", 
+              font: "bold 12pt", editable:false } 
+        )
+        ));
+    
+    myDiagram.nodeTemplateMap.add("APIProxy",
+      GO(go.Node, "Auto",
+        new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+        // new go.Binding("text", "text"),
+        GO(go.Shape, "RoundedRectangle",{ 
+          fill: "#FFFFFF",
+          portId: "", cursor: "pointer",  // the Shape is the port, not the whole Node
+        // allow all kinds of links from and to this port
+        fromLinkable: true, fromLinkableSelfNode: false, fromLinkableDuplicates: true,
+        toLinkable: true, toLinkableSelfNode: false, toLinkableDuplicates: true
+        }),
+        GO(go.Panel, "Horizontal",
+            GO(go.Picture,
+                      // Pictures should normally have an explicit width and height.
+                      // This picture has a red background, only visible when there is no source set
+                      // or when the image is partially transparent.
+                      { source:"/static/images/resources/proxy.jpg", margin: 2, width: 20, height: 20}),
+            GO(go.TextBlock, "APIProxy", textStyle(), new go.Binding("text", "text").makeTwoWay()
+              )
+        ), // end Horizontal Panel
+        GO(go.TextBlock,
+              new go.Binding("text", "instances"),
+              { alignment: go.Spot.TopRight, //background: "lightgreen", 
+              stroke: "yellowgrad", 
+              font: "bold 12pt", editable:false } 
+        )
+        ));
+    
+    myDiagram.nodeTemplateMap.add("VirtualNode",
+      GO(go.Node, "Auto",
+        new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+        // new go.Binding("text", "text"),
+        GO(go.Shape, "RoundedRectangle",{ 
+          fill: "#FFFFFF",
+          portId: "", cursor: "pointer",  // the Shape is the port, not the whole Node
+        // allow all kinds of links from and to this port
+        fromLinkable: true, fromLinkableSelfNode: false, fromLinkableDuplicates: true,
+        toLinkable: true, toLinkableSelfNode: false, toLinkableDuplicates: true
+        }),
+        GO(go.Panel, "Horizontal",
+            GO(go.Picture,
+                      // Pictures should normally have an explicit width and height.
+                      // This picture has a red background, only visible when there is no source set
+                      // or when the image is partially transparent.
+                      { source:"/static/images/resources/vnode.jpg", margin: 2, width: 20, height: 20}),
+            GO(go.TextBlock, "VirtualNode", textStyle(), new go.Binding("text", "text").makeTwoWay()
+              )
+        ), // end Horizontal Panel
+        GO(go.TextBlock,
+              new go.Binding("text", "instances"),
+              { alignment: go.Spot.TopRight, //background: "lightgreen", 
+              stroke: "yellowgrad", 
+              font: "bold 12pt", editable:false } 
+        )
+        ));
+    
+    myDiagram.nodeTemplateMap.add("DesiredEvent",
+      GO(go.Node, "Auto",
+        new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+        GO(go.Shape, "RoundedRectangle",
+          { fill: greengrad, portId: "", toLinkable: true, toEndSegmentLength: 50 }),
+        GO(go.TextBlock, "Success!", textStyle(),
+          new go.Binding("text", "text").makeTwoWay())
+        ));
+
+    // Undesired events have a special adornment that allows adding additional "reasons"
+    var UndesiredEventAdornment =
+      GO(go.Adornment, "Spot",
+        GO(go.Panel, "Auto",
+          GO(go.Shape, { fill: null, stroke: "dodgerblue", strokeWidth: 4 }),
+          GO(go.Placeholder)),
+        // the button to create a "next" node, at the top-right corner
+        GO("Button",
+          { alignment: go.Spot.BottomRight,
+            click: addReason },  // this function is defined below
+          new go.Binding("visible", "", function(a) { return !a.diagram.isReadOnly; }).ofObject(),
+          GO(go.Shape, "TriangleDown", { desiredSize: new go.Size(10, 10) })
+        )
+      );
+
+    var reasonTemplate = GO(go.Panel, "Horizontal",
+      GO(go.TextBlock, "Reason",
+        {
+          margin: new go.Margin(4,0,0,0),
+          maxSize: new go.Size(200, NaN),
+          wrap: go.TextBlock.WrapFit,
+          stroke: "whitesmoke",
+          editable: true,
+          font: smallfont
+        },
+        new go.Binding("text", "text").makeTwoWay())
+      );
+
+
+    myDiagram.nodeTemplateMap.add("UndesiredEvent",
+      GO(go.Node, "Auto",
+        new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+        { selectionAdornmentTemplate: UndesiredEventAdornment },
+        GO(go.Shape, "RoundedRectangle",
+          { fill: redgrad, portId: "", toLinkable: true, toEndSegmentLength: 50 }),
+        GO(go.Panel, "Vertical", {defaultAlignment: go.Spot.TopLeft},
+
+          GO(go.TextBlock, "Drop", textStyle(),
+            { stroke: "whitesmoke",
+              minSize: new go.Size(80, NaN) },
+            new go.Binding("text", "text").makeTwoWay()),
+
+          GO(go.Panel, "Vertical",
+            { defaultAlignment: go.Spot.TopLeft,
+              itemTemplate: reasonTemplate },
+            new go.Binding("itemArray", "reasonsList").makeTwoWay()
+          )
+        )
+        ));
+
+    myDiagram.nodeTemplateMap.add("CommentText",
+      GO(go.Node, "Auto",
+        new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+        GO(go.Shape, "Rectangle",
+          { portId: "", fill: bluegrad, fromLinkable: false }),
+        GO(go.TextBlock, "CommentText",
+          { margin: 9,
+            maxSize: new go.Size(200, NaN),
+            wrap: go.TextBlock.WrapFit,
+            editable: true,
+            font: bigfont },
+          new go.Binding("text", "text").makeTwoWay())
+        // no ports, because no links are allowed to connect with a comment
+        ));
+
+    // clicking the button on an UndesiredEvent node inserts a new text object into the panel
+    function addReason(e, obj) {
+      var adorn = obj.part;
+      if (adorn === null) return;
+      e.handled = true;
+      var arr = adorn.adornedPart.data.reasonsList;
+      myDiagram.startTransaction("add reason");
+      myDiagram.model.addArrayItem(arr, {});
+      myDiagram.commitTransaction("add reason");
+    }
+
+    // clicking the button of a default node inserts a new node to the right of the selected node,
+    // and adds a link to that new node
+    function addNodeAndLink(e, obj) {
+      var adorn = obj.part;
+      if (adorn === null) return;
+      e.handled = true;
+      var diagram = adorn.diagram;
+      diagram.startTransaction("Add State");
+      // get the node data for which the user clicked the button
+      var fromNode = adorn.adornedPart;
+      var fromData = fromNode.data;
+      // create a new "State" data object, positioned off to the right of the adorned Node
+      var toData = { text: "new" };
+      var p = fromNode.location;
+      toData.loc = p.x + 200 + " " + p.y;  // the "loc" property is a string, not a Point object
+      // add the new node data to the model
+      var model = diagram.model;
+      model.addNodeData(toData);
+      // create a link data from the old node data to the new node data
+      var linkdata = {};
+      linkdata[model.linkFromKeyProperty] = model.getKeyForNodeData(fromData);
+      linkdata[model.linkToKeyProperty] = model.getKeyForNodeData(toData);
+      // and add the link data to the model
+      model.addLinkData(linkdata);
+      // select the new Node
+      var newnode = diagram.findNodeForData(toData);
+      diagram.select(newnode);
+      diagram.commitTransaction("Add State");
+    }
+
+    // replace the default Link template in the linkTemplateMap
+    /*myDiagram.linkTemplate =
+      GO(go.Link,  // the whole link panel
+        new go.Binding("points").makeTwoWay(),
+        { //routing: go.Link.Orthogonal,  // may be either Orthogonal or AvoidsNodes
+        //curve: go.Link.JumpOver },
+        //routing: go.Link.Normal//,
+        curve: go.Link.Bezier//,
+        //toShortLength: 8
+        },
+        //new go.Binding("curviness", "curviness"),
+        GO(go.Shape,  // the link shape
+          { stroke: "black", strokeWidth: 1.0 }),
+        GO(go.Shape,  // the arrowhead
+          { toArrow: "Standard", fill: "black"})
+    );*/
+    
+    myDiagram.linkTemplate =
+    GO(go.Link,
+      //{ curve: go.Link.Bezier },  // Bezier curve
+      GO(go.Shape),
+      GO(go.Shape, { toArrow: "Standard" })
+    );
+    
+    myDiagram.linkTemplateMap.add("Comment",
+      GO(go.Link, { selectable: false },
+        GO(go.Shape, { strokeWidth: 2, stroke: "darkgreen" })));
+        
+    // Groups consist of a title in the color given by the group node data
+    // above a translucent gray rectangle surrounding the member parts
+    myDiagram.groupTemplate =
+      GO(go.Group, "Vertical",
+        { selectionObjectName: "PANEL",  // selection handle goes around shape, not label
+          ungroupable: true },  // enable Ctrl-Shift-G to ungroup a selected Group
+        GO(go.TextBlock,
+          {
+            font: "normal 14px sans-serif",
+            isMultiline: false,  // don't allow newlines in text
+            editable: true  // allow in-place editing by user
+          },
+          new go.Binding("text", "text").makeTwoWay(),
+          new go.Binding("stroke", "color")),
+        GO(go.Panel, "Auto",
+          { name: "PANEL" },
+          GO(go.Shape, "Rectangle",  // the rectangular shape around the members
+            { fill: "rgba(128,128,128,0.2)", stroke: "gray", strokeWidth: 1 }),
+          GO(go.Placeholder, { padding: 10 })  // represents where the members are
+        )
+      );
+
+
+    // a shared Robot that can be used by all commands for this one Diagram
+    robot = new Robot(myDiagram);  // defined in Robot.js
+
+    var palette =
+      GO(go.Palette, "palette",  // create a new Palette in the HTML DIV element "palette"
+        {
+          // share the template map with the Palette
+          nodeTemplateMap: myDiagram.nodeTemplateMap,
+          autoScale: go.Diagram.Uniform  // everything always fits in viewport
+        });
+
+    palette.model.nodeDataArray = [
+      { category: "HostService",text:"HostService", instances:"" },
+      { category: "DockerService",text:"DockerService", instances:"" },
+      { category: "APIProxy",text:"APIProxy", instances:"" },
+      //{ }, // default node
+      //{ category: "DesiredEvent" },
+      { category: "VirtualNode",text:"VirtualNode", instances:"" },
+      //{ category: "UndesiredEvent", reasonsList: [{}] },
+      { category: "CommentText"}
+    ];
+
+    // read in the JSON-format data from the "mySavedModel" element
+    
+    load();
+    //layout();
+    
+    function showMessage(s) {
+    document.getElementById("diagramEventsMsg").textContent = s;
+  }
+    myDiagram.addDiagramListener("ObjectSingleClicked",
+      function(e) {
+        var part = e.subject.part;
+        //if (!(part instanceof go.Link)) showMessage("Clicked on " + part.data.key);
+        showMessage("Clicked on " + part.data.key + " : " + part.data.text);
+        $("#pageTab > .active").removeClass('active');
+        $("#pageTabContent > .active").removeClass('active');
+        $("#id_Node_Configurations_li").addClass("active");
+        $("#id_Node_Configurations").addClass("active");
+      });
+    myDiagram.addDiagramListener("BackgroundSingleClicked",
+      function() {
+        //var part = e.subject.part;
+        //if (!(part instanceof go.Link)) showMessage("Clicked on " + part.data.key);
+        showMessage("Clicked on bk");
+        $("#pageTab > .active").removeClass('active');
+        $("#pageTabContent > .active").removeClass('active');
+        $("#id_Global_Configurations_li").addClass("active");
+        $("#id_Global_Configurations").addClass("active");
+      });
+    $(function() {
+        $("#paletteDraggable").draggable({handle: "#paletteDraggableHandle"}).resizable({
+          // After resizing, perform another layout to fit everything in the palette's viewport
+          stop: function(){ myPalette.layoutDiagram(true); }
+        });
+
+        $("#infoDraggable").draggable({handle: "#infoDraggableHandle"}).resizable({ });
+
+
+        var inspector = new Inspector('myInfo', myDiagram,
+          {
+            properties: {
+              // key would be automatically added for nodes, but we want to declare it read-only also:
+              "key": { readOnly: true, show: Inspector.showIfPresent },
+              // fill and stroke would be automatically added for nodes, but we want to declare it a color also:
+              "fill": { show: Inspector.showIfPresent, type: 'color' },
+              "stroke": { show: Inspector.showIfPresent, type: 'color' },
+              "category": { readOnly: true, show: Inspector.showIfPresent }
+            }
+          });
+    });
+
+
+  }
+  
+  $(function() {
+    // Remove button click
+    $(document).on(
+        'click',
+        '[data-role="dynamic-fields"] > .form-inline [data-role="remove"]',
+        function(e) {
+            e.preventDefault();
+            $(this).closest('.form-inline').remove();
+        }
+    );
+    // Add button click
+    $(document).on(
+        'click',
+        '[data-role="dynamic-fields"] > .form-inline [data-role="add"]',
+        function(e) {
+            e.preventDefault();
+            var container = $(this).closest('[data-role="dynamic-fields"]');
+            new_field_group = container.children().filter('.form-inline:first-child').clone();
+            new_field_group.find('input').each(function(){
+                $(this).val('');
+            });
+            container.append(new_field_group);
+        }
+    );
+});
+
+	</script>
+</body>
+</html>
