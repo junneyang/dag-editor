@@ -3,5 +3,9 @@ DAG editor based on GoJS, as general task workflow dependency designer。简易D
 
 
 ### Screentshot:
-* DEMO如下：
+* 图形设计器：
 ![image](job-composer.png)  
+
+* 图形展示：
+![image](tool.png)  
+
