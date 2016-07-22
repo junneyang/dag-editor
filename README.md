@@ -9,3 +9,6 @@ DAG editor based on GoJS, as general task workflow dependency designer。简易D
 * 图形展示：
 ![image](tool.png)  
 
+### 参考效果:
+* http://demo.qunee.com/#VOIP Demo
+* http://gojs.net/latest/samples/stateChart.html
