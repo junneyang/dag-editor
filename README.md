@@ -10,5 +10,6 @@ DAG editor based on GoJS, as general task-workflow(任务编排) OR micro-servic
 ![image](tool.png)  
 
 ### 参考效果:
-* http://demo.qunee.com/#VOIP Demo
-* http://gojs.net/latest/samples/stateChart.html
+* [Ref1](http://demo.qunee.com/#VOIP Demo)
+* [Ref2](http://gojs.net/latest/samples/stateChart.html)
+
